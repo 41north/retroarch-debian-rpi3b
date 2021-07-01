@@ -1,0 +1,30 @@
+Source: retroarch
+Section: otherosfs
+Priority: extra
+Maintainer: Mr Robot <mrrobot@gmx.com>
+Uploaders: Mr Robot <mrrobot@gmx.com>
+Build-Depends:	debhelper (>= 9),
+				pkg-config,
+				build-essential,
+				libfreetype6-dev,
+				libgbm-dev,
+				libxkbcommon-dev,
+				libsdl2-dev,
+				libasound2-dev,
+				libusb-1.0-0-dev,
+				libudev-dev,
+				zlib1g-dev
+Standards-Version: 3.9.5
+Homepage: https://www.libretro.com/
+Vcs-Git: git://github.com/libretro/RetroArch.git
+Vcs-Browser: https://github.com/libretro/RetroArch
+
+Package: retroarch
+Architecture: any
+Depends:		${shlibs:Depends},
+				${misc:Depends}
+Description: Simple frontend for the libretro library
+ RetroArch is an open source, multi-platform frontend for the libretro API.
+ It can be used as a modular multi emulator system, game engine, media player
+ and 3D technical demonstration. These features are available through
+ libretro cores.

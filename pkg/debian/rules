@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+# Copyright (C) 2010 Hunter Kaller
+# Copyright (C) 2014 Sergio Benjamim
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	CFLAGS="-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" ./configure --prefix=/usr --enable-sdl2 --disable-rsound --disable-audioio --disable-oss --disable-jack --disable-pulse --disable-qt --disable-x11 --disable-vulkan --disable-wayland --disable-materialui --disable-xmb --disable-ozone --enable-opengles --disable-opengl1 --disable-ffmpeg --disable-ssa --disable-networkgamepad --disable-netplaydiscovery --disable-xinerama --disable-online_updater  --disable-update_cores --disable-update_assets --disable-cheevos --disable-discord --disable-accessibility --disable-translate --disable-imageviewer --enable-floathard --enable-dispmanx --enable-neon
+
+override_dh_auto_build:
+	dh_auto_build --
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/retroarch PREFIX=/usr install
+	cp $(CURDIR)/retroarch.cfg $(CURDIR)/debian/retroarch/etc/
+
+override_dh_auto_clean:
+	touch config.mk
+	dh_auto_clean --
